@@ -1,0 +1,23 @@
+{
+  "name": "dehari-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haiderzaidi07/dehari-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haiderzaidi07/dehari-backend/issues"
+  },
+  "homepage": "https://github.com/haiderzaidi07/dehari-backend#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
