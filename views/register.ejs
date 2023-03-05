@@ -1,0 +1,30 @@
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Registration Page</title>
+<!-- Load Tailwind CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css">
+</head>
+<body class="bg-gradient-to-r from-green-400 via-teal-500 to-blue-500">
+<div class="min-h-screen flex items-center justify-center">
+  <div class="bg-white p-8 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-bold mb-4 text-center">Register</h1>
+    <form class="space-y-4">
+      <div>
+        <label class="block font-semibold text-gray-700 mb-2" for="name">Name</label>
+        <input class="w-full border border-gray-300 p-2 rounded-lg" type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-2" for="email">Email</label>
+        <input class="w-full border border-gray-300 p-2 rounded-lg" type="email" id="email" name="email" required>
+      </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-2" for="password">Password</label>
+        <input class="w-full border border-gray-300 p-2 rounded-lg" type="password" id="password" name="password" required>
+      </div>
+        <div>
+          <button class="w-full bg-gradient-to-r from-green-400 via-teal-500 to-blue-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
