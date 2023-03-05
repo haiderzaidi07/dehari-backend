@@ -7,10 +7,10 @@
 <div class="min-h-screen flex items-center justify-center">
   <div class="bg-white p-8 rounded-lg shadow-lg">
     <h1 class="text-3xl font-bold mb-4 text-center">Register</h1>
-    <form class="space-y-4">
+    <form class="space-y-4" action="/users/register" method="post">
       <div>
-        <label class="block font-semibold text-gray-700 mb-2" for="name">Name</label>
-        <input class="w-full border border-gray-300 p-2 rounded-lg" type="text" id="name" name="name" required>
+        <label class="block font-semibold text-gray-700 mb-2" for="username">Username</label>
+        <input class="w-full border border-gray-300 p-2 rounded-lg" type="text" id="username" name="username" required>
       </div>
       <div>
         <label class="block font-semibold text-gray-700 mb-2" for="email">Email</label>
@@ -20,8 +20,12 @@
         <label class="block font-semibold text-gray-700 mb-2" for="password">Password</label>
         <input class="w-full border border-gray-300 p-2 rounded-lg" type="password" id="password" name="password" required>
       </div>
+      <div>
+        <label class="block font-semibold text-gray-700 mb-2" for="password2">Confirm Password</label>
+        <input class="w-full border border-gray-300 p-2 rounded-lg" type="password" id="password2" name="password2" required>
+      </div>
         <div>
-          <button class="w-full bg-gradient-to-r from-green-400 via-teal-500 to-blue-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out">Login</button>
+          <button class="w-full bg-gradient-to-r from-green-400 via-teal-500 to-blue-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300 ease-in-out">Register</button>
         </div>
       </form>
     </div>
