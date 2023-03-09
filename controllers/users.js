@@ -10,8 +10,10 @@ module.exports = {
     },
     postRegister: async (req, res) => {
         let {username, email, password, password2 } = req.body
+        // console.log(pool);
         console.log({username, email, password, password2})
         let errors = []
+        
         if (!username || !email || !password || !password2){
             errors.push({message: "Please enter all fields"})
         }
@@ -29,11 +31,13 @@ module.exports = {
         } else{
             let hashedPassword = await bcrypt.hash(password, 10)
             console.log(hashedPassword)
-            pool.query(`INSERT INTO  Users (username, email, password)
-            values ($1, $2, $3) returning id, password`, [username, email, password],
+            console.log(pool)
+            pool.query(`INSERT INTO  users (name, email, password)
+            values ($1, $2, $3) returning id, password;`, [username, email, hashedPassword],
             (err, result)=>{
                 if (err){
-                    throw err
+                    console.log(err)
+                    
                 }
                 else{
                     console.log(result.rows)

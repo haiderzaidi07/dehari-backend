@@ -1,3 +1,4 @@
+require('dotenv').config({path: './config/.env'})
 const express = require('express')
 const app = express()
 // const connectDB = require('./config/database')
@@ -6,8 +7,6 @@ const userRoutes = require('./routes/users')
 const PORT = 4500
 const { pool } = require('./config/dbConfig')
 
-
-// require('dotenv').config({path: './config/.env'})
 
 // require('./config/passport')(passport)
 
