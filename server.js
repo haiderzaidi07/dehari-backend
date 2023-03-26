@@ -4,6 +4,7 @@ const app = express()
 // const connectDB = require('./config/database')
 const homeRoutes = require('./routes/home')
 const userRoutes = require('./routes/users')
+const homePageRoutes = require('./routes/homepage')
 const PORT = 4500
 const { pool } = require('./config/dbConfig')
 const session = require('express-session')
@@ -32,6 +33,7 @@ app.use(passport.session())
 
 app.use('/', homeRoutes)
 app.use('/users', userRoutes)
+app.use('/homepage', homePageRoutes)
 // app.use('/courses', coursesRoutes)
 
 app.listen(PORT, () => {
