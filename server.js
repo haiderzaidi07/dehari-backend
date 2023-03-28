@@ -33,8 +33,7 @@ app.use(passport.session())
 
 app.use('/', homeRoutes)
 app.use('/users', userRoutes)
-app.use('/homepage', homePageRoutes)
-// app.use('/courses', coursesRoutes)
+app.use('/homepage', homePageRoutes) // delete soon
 
 app.listen(PORT, () => {
     console.log(`Server running on ${PORT}`)

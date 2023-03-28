@@ -34,10 +34,11 @@ module.exports = {
             let hashedPassword = await bcrypt.hash(password, 10)
             console.log(hashedPassword)
             console.log(pool)
-            pool.query(`INSERT INTO  users (name, email, password)
+            pool.query(`INSERT INTO users (username, email, password)
             values ($1, $2, $3) returning id, password;`, [username, email, hashedPassword],
             (err, result)=>{
                 if (err){
+                    console.log("here")
                     console.log(err)
                     
                 }
@@ -53,32 +54,32 @@ module.exports = {
         // if(!validator.isEmail(req.body.email))validationErrors.push({msg:'Please enter a valid email address.'}) 
         if(validator.isEmpty(req.body.password))validationErrors.push({msg:'Password cannot be blank.'}) 
          
-        if(validationErrors.length){ 
+        if (validationErrors.length) {
             console.log('error')
-        console.log(validationErrors.length)
-            req.flash('errors',validationErrors) 
-        returnres.redirect('/users/login') 
+            console.log(validationErrors.length)
+            req.flash('errors', validationErrors)
+            returnres.redirect('/users/login')
         }
-         
+
         // req.body.email=validator.normalizeEmail(req.body.email,{gmail_remove_dots:false}) 
-         
-        passport.authenticate('local',(err,user,info)=>{ 
-        if(err){returnnext(err)} 
-        // console.log(info) 
-        // console.log(user) 
-        // console.log('error')
-        if(!user){ 
-        req.flash('errors',info) 
-        // console.log('error')
-        return res.redirect('/users/login') 
-        } 
-        req.logIn(user,(err)=>{ 
-        if(err){return next(err)} 
-        console.log('success')
-        req.flash('success',{msg:'Success!You are logged in.'}) 
-        res.redirect(req.session.returnTo||'../homepage/') 
-        }) 
-        })(req,res,next) 
-        }
+
+        passport.authenticate('local', (err, user, info) => {
+            if (err) { returnnext(err) }
+            // console.log(info) 
+            // console.log(user) 
+            // console.log('error')
+            if (!user) {
+                req.flash('errors', info)
+                // console.log('error')
+                return res.redirect('/users/login')
+            }
+            req.logIn(user, (err) => {
+                if (err) { return next(err) }
+                console.log('success')
+                req.flash('success', { msg: 'Success!You are logged in.' })
+                res.redirect(req.session.returnTo || '../homepage/')
+            })
+        })(req, res, next)
+    }
     
 }
