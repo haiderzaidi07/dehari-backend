@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const homeRoutes = require('./routes/home')
 const userRoutes = require('./routes/users')
+const adRoutes = require('./routes/ad')
 const { pool } = require('./config/dbConfig')
 const session = require('express-session')
 const pgSession = require('connect-pg-simple')(session)
@@ -37,7 +38,7 @@ app.use(passport.session())
 
 app.use('/', homeRoutes)
 app.use('/users', userRoutes)
-
+app.use('/ad', adRoutes)
 app.listen(process.env.PORT, () => {
     console.log(`Server running on ${process.env.PORT}`)
 })
