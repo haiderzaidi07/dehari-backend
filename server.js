@@ -28,7 +28,7 @@ app.use(session({
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: true } // Optional: set the "secure" flag for HTTPS-only cookies
+  cookie: { secure: false } // Optional: set the "secure" flag for HTTPS-only cookies
 }));
 
 app.use(flash())

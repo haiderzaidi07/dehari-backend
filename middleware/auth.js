@@ -1,6 +1,7 @@
 module.exports = {
     ensureAuth: function (req, res, next) {
-      if (req.session.userId) {
+      // console.log(req.session.passport.user)
+      if (req.session.passport.user) {
         return next()
       } else {
         res.redirect('/users/login')

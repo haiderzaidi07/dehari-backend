@@ -5,8 +5,6 @@ const { pool } = require('../config/dbConfig')
 
 module.exports = {
     getLogin: (req, res) => {
-        console.log("LOGIN PAGE")
-        console.log(req.session.userId)
         res.render('login.ejs')
     },
     getRegister: (req, res) => {
@@ -94,7 +92,7 @@ module.exports = {
       
         // destroy session and redirect user to login page
         req.session.destroy(() => {
-          res.redirect('/login');
+            res.redirect('/users/login');
         });
       }
     
