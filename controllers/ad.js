@@ -2,11 +2,20 @@ const { pool } = require('../config/dbConfig')
 
 module.exports = {
     getPostAd: (req, res) => {
-        res.render('postad.ejs')
+        res.render('postAd.ejs')
     },
-    // getAdList:(req, res)=>{
-    //     res.render('adList.ejs')
-    // }
+    getAdList:(req, res)=>{
+        pool.query(`SELECT * FROM ads WHERE userid = $1`, [req.user.id], 
+        (err, result) => {
+            if (err) { console.error(err) }
+
+            else{
+                // console.log(result.rows)
+            }
+
+            res.render('adList.ejs', {ads: result.rows })
+        })
+    },
     postAd: (req, res) =>{
         let {title, description, price} = req.body
        pool.query(`INSERT INTO ads (title, description, price, userid)

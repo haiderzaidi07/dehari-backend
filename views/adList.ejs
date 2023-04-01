@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dehari</title>
+  </head>
+  <body>
+    <nav>
+      <div class="flex justify-between items-center">
+        <span class="text-green-600 mx-4 font-bold text-2xl">Dehari</span>
+        <ul class="flex">
+          <li class="mx-4 my-2">About</li>
+          <li class="mx-4 my-2">Home</li>
+          <li class="mx-4 my-2">Contact Us</li>
+        </ul>
+        <div class="flex hidden">
+          <button
+            class="rounded-full bg-emerald-400 text-white mx-2 my-2 px-4 py-1"
+          >
+            Login In
+          </button>
+          <button
+            class="rounded-full bg-emerald-400 text-white mx-2 my-2 px-4 py-1"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+      <hr class="w-full h-[2px] bg-green-600" />
+    </nav>
+    
+    <div id="black_shade" class="hidden absolute bg-black h-[1000px] w-full top-0 opacity-70"></div>
+    <!-- Ad list -->
+    <section class="bg-red-500">
+      <div class="mt-32 h-screen w-2/3 mx-auto bg-white">
+        <div class="border-[1px] border-slate-300 p-6 rounded-t-xl">
+          <h1 class="text-3xl my-4 font-bold text-emerald-400">
+            Jobs of your domain
+          </h1>
+          <form action="">
+            <input
+              class="border-[1px] border-emerald-400 rounded-l-full py-2 px-4 my-4 w-5/6"
+              type="text"
+              placeholder="Type something..."
+            />
+            <input
+              type="button"
+              value="Search"
+              class="border-[1px] border-emerald-400 bg-emerald-400 text-white rounded-r-full py-2 px-4 my-4 -ml-2"
+            />
+          </form>
+        </div>
+
+        <% for(let i = 0; i < ads.length; i++){ %>
+          <!-- Ad  -->
+          <div id="ad" class="ad border-[1px] border-slate-300 text-emerald-400 p-6">
+            <h2 class="text-xl font-semibold my-2"><%= ads[i].title %></h2>
+            <p class="text-slate-600 w-2/3 mb-10">
+              <%= ads[i].description %>
+            </p>
+            <span class="font-semibold my-10">Price estimate: Rs <%= ads[i].price %></span>
+          </div>
+        <% } %>
+        <!-- Ad  -->
+        <div class="ad border-[1px] border-slate-300 text-emerald-400 p-6">
+          <h2 class="text-xl font-semibold my-2">Graphic Designer(Placeholder Ad)</h2>
+          <p class="text-slate-600 w-2/3 mb-10">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non
+            deleniti accusamus fugiat explicabo molestiae laborum, eaque
+            excepturi quos adipisci, officiis quaerat, minus laboriosam ipsam
+            quidem sequi recusandae! Quos, explicabo eum!
+          </p>
+          <span class="font-semibold my-10">Price estimate: 25$</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- pop up -->
+<div id="ad_pop_up" class="hidden transition-transform duration-500 bg-white text-emerald-400 rounded-lg absolute p-6 top-14 w-1/2 left-1/2 -translate-x-1/2">
+    <span onclick="closePopUp()" class="hover:scale-110 active:scale-90 cursor-pointer text-emerald-400 font-extrabold text-2xl absolute top-6 right-10">x</span>
+    <h1 class=" font-bold text-2xl my-2">Graphic Designer</h1>
+    <p class="text-slate-600 w-5/6 py-8">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde saepe nobis, quod omnis dolorum quas maxime tempore. Exercitationem unde ipsa odio soluta asperiores illum, repudiandae debitis quisquam tenetur corrupti vel est quas doloribus! Enim at quod tempore temporibus eligendi libero maiores totam, molestias illo quam perferendis delectus eveniet vitae recusandae nostrum sint illum nisi repudiandae ad nam dolore minus quasi.</p>
+
+    <h3 class="font-semibold mt-10">Sample images</h3>
+    <div class="flex">
+        <img class="w-1/5 m-1 hover:scale-150 transition-all" src="img/img1.jpg" alt="">
+        <img class="w-1/5 m-1 hover:scale-150 transition-all" src="img/img2.jpg" alt="">
+        <img class="w-1/5 m-1 hover:scale-150 transition-all" src="img/img3.jpg" alt="">
+    </div>
+        <button onclick="makeBid()" class="mx-auto block bg-emerald-400 rounded-full py-2 px-4 text-white mt-10 hover:-translate-y-1 transition-transform active:translate-y-1">Make bid</button>
+
+</div>
+
+<!-- Biding pop up  -->
+<div id=make_bid_pop_up class="hidden bg-white text-emerald-400 rounded-lg absolute p-6 top-14 w-1/2 left-1/2 -translate-x-1/2">
+    <span onclick="closePopUp()"  class="hover:scale-110 active:scale-90 cursor-pointer text-emerald-400 font-extrabold text-2xl absolute top-6 right-10">x</span>
+    
+    <form action="">
+
+        <h2 class="font-bold text-xl">Bid description:</h2>
+        <textarea class="p-2 my-4 w-full bg-slate-100 text-slate-600 text-md" name="" id="" cols="30" rows="10"></textarea>
+        <h2 class="font-bold">Attach any relevant work</h2>
+        <input type="file" name="" id="" class="block file:bg-white file:rounded-xl file:px-2 file:py-1 file:text-emerald-400 mb-10 mt-2 file:text-sm file:border-[2px] file:border-emerald-400">
+        <span>Your bid</span>
+        <input type="text" class="font-semibold border-2 border-emerald-400 block py-2 px-4 my-2 text-sm rounded-sm" placeholder="Input your price">
+        <input onclick="placeBid()" type="button" value="Bid" class="hover:-translate-y-1 transition-transform active:translate-y-1 block mx-auto bg-emerald-400 text-white py-2 px-4 rounded-full w-32 mt-10">
+    </form>
+        
+</div>
+<!-- confirmation pop up  -->
+<div id="confirmation_pop_up" class="hidden bg-white text-emerald-400 rounded-lg absolute p-6 top-14 w-1/3 left-1/2 -translate-x-1/2">
+    <h1 class="text-xl text-center font-extrabold my-10">Please confirm your order!</h1>
+    <button onclick="confirmBid()" class="hover:-translate-y-1 transition-transform active:translate-y-1 py-2 px-4 font-bold rounded-full block m-4 w-1/2 mx-auto bg-emerald-400 text-white">Yes, confirm</button>
+    <button onclick="cancelBid()" class="hover:-translate-y-1 transition-transform active:translate-y-1 py-2 px-4 font-bold rounded-full block m-4 w-1/2 mx-auto bg-slate-200 text-slate-600">No, cancel it</button>
+</div>
+
+<!-- congratulations pop up  -->
+<div id="congratulations_pop_up" class="hidden bg-white text-emerald-400 rounded-lg absolute p-6 top-14 w-1/3 left-1/2 -translate-x-1/2">
+    <img src="/img/img-congratulation.png" alt="" class="mx-auto w-2/3">
+    <h1 class="text-2xl text-center font-extrabold mt-10">Congratulations</h1>
+    <h2 class="text-slate-800 font-semibold text-center ">Your bid has been sent successfully</h2>
+    <button onclick="doneBid()" class="mt-10 py-2 px-4 font-bold rounded-full block m-4 w-1/2 mx-auto bg-emerald-400 text-white hover:-translate-y-1 transition-transform active:translate-y-1">Done</button>
+</div>
+
+<!-- js file  -->
+<script src="script.js"></script>
+</body>
+</html>
