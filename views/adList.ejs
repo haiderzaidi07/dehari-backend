@@ -98,21 +98,23 @@
 <div id=make_bid_pop_up class="hidden bg-white text-emerald-400 rounded-lg absolute p-6 top-14 w-1/2 left-1/2 -translate-x-1/2">
     <span onclick="closePopUp()"  class="hover:scale-110 active:scale-90 cursor-pointer text-emerald-400 font-extrabold text-2xl absolute top-6 right-10">x</span>
     
-    <form action="">
+    <form action="/ad/postBid" method="post">
 
         <h2 class="font-bold text-xl">Bid description:</h2>
-        <textarea class="p-2 my-4 w-full bg-slate-100 text-slate-600 text-md" name="" id="" cols="30" rows="10"></textarea>
+        <textarea class="p-2 my-4 w-full bg-slate-100 text-slate-600 text-md" name="description" id="description" for="description" cols="30" rows="10"></textarea>
         <h2 class="font-bold">Attach any relevant work</h2>
         <input type="file" name="" id="" class="block file:bg-white file:rounded-xl file:px-2 file:py-1 file:text-emerald-400 mb-10 mt-2 file:text-sm file:border-[2px] file:border-emerald-400">
         <span>Your bid</span>
-        <input type="text" class="font-semibold border-2 border-emerald-400 block py-2 px-4 my-2 text-sm rounded-sm" placeholder="Input your price">
-        <input onclick="placeBid()" type="button" value="Bid" class="hover:-translate-y-1 transition-transform active:translate-y-1 block mx-auto bg-emerald-400 text-white py-2 px-4 rounded-full w-32 mt-10">
+        <input type="number" name="bid" id="bid" for="bid" class="font-semibold border-2 border-emerald-400 block py-2 px-4 my-2 text-sm rounded-sm" placeholder="Input your price" >
+        <button class="hover:-translate-y-1 transition-transform active:translate-y-1 block mx-auto bg-emerald-400 text-white py-2 px-4 rounded-full w-32 mt-10">Bid</button>
+        
+        <!-- <input onclick="placeBid()" type="button" value="Bid" class="hover:-translate-y-1 transition-transform active:translate-y-1 block mx-auto bg-emerald-400 text-white py-2 px-4 rounded-full w-32 mt-10"> -->
     </form>
         
 </div>
 <!-- confirmation pop up  -->
 <div id="confirmation_pop_up" class="hidden bg-white text-emerald-400 rounded-lg absolute p-6 top-14 w-1/3 left-1/2 -translate-x-1/2">
-    <h1 class="text-xl text-center font-extrabold my-10">Please confirm your order!</h1>
+    <h1 class="text-xl text-center font-extrabold my-10">Please confirm your bid!</h1>
     <button onclick="confirmBid()" class="hover:-translate-y-1 transition-transform active:translate-y-1 py-2 px-4 font-bold rounded-full block m-4 w-1/2 mx-auto bg-emerald-400 text-white">Yes, confirm</button>
     <button onclick="cancelBid()" class="hover:-translate-y-1 transition-transform active:translate-y-1 py-2 px-4 font-bold rounded-full block m-4 w-1/2 mx-auto bg-slate-200 text-slate-600">No, cancel it</button>
 </div>
@@ -126,6 +128,62 @@
 </div>
 
 <!-- js file  -->
-<script src="script.js"></script>
+<script>let ad=document.getElementById('ad')
+  let adPopUp=document.getElementById('ad_pop_up')
+  let blackShade=document.getElementById('black_shade')
+  let makeBidPopUp=document.getElementById('make_bid_pop_up')
+  let confirmationPopUp=document.getElementById('confirmation_pop_up')
+  let congratulationsPopUp=document.getElementById('congratulations_pop_up')
+  
+  function closePopUp(){
+      if(!adPopUp.classList.contains('hidden'))
+          adPopUp.classList.add('hidden')
+      if(!blackShade.classList.contains('hidden'))
+          blackShade.classList.toggle('hidden')
+      if(!makeBidPopUp.classList.contains('hidden'))
+          makeBidPopUp.classList.add('hidden')
+  
+  
+  }
+  function makeBid(){
+  makeBidPopUp.classList.toggle('hidden')
+  adPopUp.classList.toggle('hidden')
+  
+  }
+  
+  function placeBid(){
+      confirmationPopUp.classList.toggle('hidden')
+      makeBidPopUp.classList.toggle('hidden')
+  
+  }
+  
+  function confirmBid(){
+  congratulationsPopUp.classList.toggle('hidden')
+  
+  }
+  function cancelBid(){
+  confirmationPopUp.classList.toggle('hidden')
+  blackShade.classList.toggle('hidden')
+  
+  
+  }
+  function doneBid(){
+      blackShade.classList.toggle('hidden')
+      confirmationPopUp.classList.toggle('hidden')
+      congratulationsPopUp.classList.toggle('hidden')
+      // adPopUp.classList.toggle('hidden')
+      // makeBidPopUp.classList.toggle('hidden')
+  
+  
+  
+  
+  
+  }
+  
+  ad.addEventListener('click',()=>{
+      blackShade.classList.toggle('hidden')
+      adPopUp.classList.toggle('hidden')
+  
+  })</script>
 </body>
 </html>

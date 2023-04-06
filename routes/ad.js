@@ -6,5 +6,5 @@ const { ensureAuth } = require('../middleware/auth')
 router.get('/post',ensureAuth, adController.getPostAd)
 router.post('/post', adController.postAd)
 router.get('/list', adController.getAdList)
-
+router.post('/postBid', adController.postBid)
 module.exports = router
