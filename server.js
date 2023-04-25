@@ -10,11 +10,16 @@ const session = require('express-session')
 const pgSession = require('connect-pg-simple')(session)
 const flash = require('express-flash')
 const passport = require('passport')
+const cors = require('cors');
 const initializePassport = require('./config/passportConfig')
 
 initializePassport(passport)
 
-app.set('view engine', 'ejs')
+// app.set('view engine', 'ejs')
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}))
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
@@ -41,6 +46,7 @@ app.use('/', homeRoutes)
 app.use('/users', userRoutes)
 app.use('/ad', adRoutes)
 app.use('/profile', profileRoutes)
+
 app.listen(process.env.PORT, () => {
     console.log(`Server running on ${process.env.PORT}`)
 })

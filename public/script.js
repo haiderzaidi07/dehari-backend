@@ -1,4 +1,4 @@
-let ad=document.getElementById('ad')
+const ads=document.querySelectorAll('div#ad')
 let adPopUp=document.getElementById('ad_pop_up')
 let blackShade=document.getElementById('black_shade')
 let makeBidPopUp=document.getElementById('make_bid_pop_up')
@@ -50,8 +50,23 @@ function doneBid(){
 
 }
 
-ad.addEventListener('click',()=>{
+Array.from(ads).forEach((element, i) => element.addEventListener('click', ()=>{
     blackShade.classList.toggle('hidden')
     adPopUp.classList.toggle('hidden')
+    // sendAdId(i)
 
-})
+}))
+
+async function sendAdId(id){
+    
+    try{
+        const response = await fetch('/ad/postBid', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 'ad_id': id })
+        })
+    }
+    catch(err){
+        console.error(err)
+    }
+}

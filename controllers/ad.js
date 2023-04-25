@@ -5,7 +5,7 @@ module.exports = {
         res.render('postAd.ejs')
     },
     getAdList:(req, res)=>{
-        console.log(req.user.id)
+        // console.log(req.user.id)
         pool.query(`SELECT * FROM ads`, 
         (err, result) => {
             if (err) { console.error(err) }
@@ -33,11 +33,10 @@ module.exports = {
     },
     postBid: (req, res) =>{
         let {description, bid} = req.body;
-        console.log('hi')
         
-        console.log(req.body)
-        pool.query(`INSERT INTO bids (description, bid) 
-        values ($1, $2)`, [description, bid],
+        // console.log(req.body)
+        pool.query(`INSERT INTO bids (description, bid, ad_id) 
+        values ($1, $2, $3)`, [description, bid, req.body.ad_id+1],
         (err, result) =>{
             if (err){
                 console.error(err)

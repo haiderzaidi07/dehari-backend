@@ -78,7 +78,9 @@ module.exports = {
                 if (err) { return next(err) }
                 // console.log('success')
                 req.flash('success', { msg: 'Success! You are logged in.' })
-                res.redirect('/homepage')
+                res.send(user)
+                // console.log(user)
+                // res.redirect('/homepage')
             })
         })(req, res, next)
     },

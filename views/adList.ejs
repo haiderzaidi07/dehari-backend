@@ -63,9 +63,25 @@
             </p>
             <span class="font-semibold my-10">Price estimate: Rs <%= ads[i].price %></span>
           </div>
+
+          <!-- pop up -->
+          <div id="ad_pop_up" class="hidden transition-transform duration-500 bg-white text-emerald-400 rounded-lg absolute p-6 top-14 w-1/2 left-1/2 -translate-x-1/2">
+            <span onclick="closePopUp()" class="hover:scale-110 active:scale-90 cursor-pointer text-emerald-400 font-extrabold text-2xl absolute top-6 right-10">x</span>
+            <h1 class=" font-bold text-2xl my-2"><%= ads[i].title %></h1>
+            <p class="text-slate-600 w-5/6 py-8"><%= ads[i].description %></p>
+
+            <h3 class="font-semibold mt-10">Sample images</h3>
+            <div class="flex">
+                <img class="w-1/5 m-1 hover:scale-150 transition-all" src="img/img1.jpg" alt="">
+                <img class="w-1/5 m-1 hover:scale-150 transition-all" src="img/img2.jpg" alt="">
+                <img class="w-1/5 m-1 hover:scale-150 transition-all" src="img/img3.jpg" alt="">
+            </div>
+                <button onclick="makeBid()" class="mx-auto block bg-emerald-400 rounded-full py-2 px-4 text-white mt-10 hover:-translate-y-1 transition-transform active:translate-y-1">Make bid</button>
+
+          </div>
         <% } %>
         <!-- Ad  -->
-        <div class="ad border-[1px] border-slate-300 text-emerald-400 p-6">
+        <!-- <div class="ad border-[1px] border-slate-300 text-emerald-400 p-6">
           <h2 class="text-xl font-semibold my-2">Graphic Designer(Placeholder Ad)</h2>
           <p class="text-slate-600 w-2/3 mb-10">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non
@@ -74,25 +90,11 @@
             quidem sequi recusandae! Quos, explicabo eum!
           </p>
           <span class="font-semibold my-10">Price estimate: 25$</span>
-        </div>
+        </div> -->
       </div>
     </section>
 
-    <!-- pop up -->
-<div id="ad_pop_up" class="hidden transition-transform duration-500 bg-white text-emerald-400 rounded-lg absolute p-6 top-14 w-1/2 left-1/2 -translate-x-1/2">
-    <span onclick="closePopUp()" class="hover:scale-110 active:scale-90 cursor-pointer text-emerald-400 font-extrabold text-2xl absolute top-6 right-10">x</span>
-    <h1 class=" font-bold text-2xl my-2">Graphic Designer</h1>
-    <p class="text-slate-600 w-5/6 py-8">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Unde saepe nobis, quod omnis dolorum quas maxime tempore. Exercitationem unde ipsa odio soluta asperiores illum, repudiandae debitis quisquam tenetur corrupti vel est quas doloribus! Enim at quod tempore temporibus eligendi libero maiores totam, molestias illo quam perferendis delectus eveniet vitae recusandae nostrum sint illum nisi repudiandae ad nam dolore minus quasi.</p>
-
-    <h3 class="font-semibold mt-10">Sample images</h3>
-    <div class="flex">
-        <img class="w-1/5 m-1 hover:scale-150 transition-all" src="img/img1.jpg" alt="">
-        <img class="w-1/5 m-1 hover:scale-150 transition-all" src="img/img2.jpg" alt="">
-        <img class="w-1/5 m-1 hover:scale-150 transition-all" src="img/img3.jpg" alt="">
-    </div>
-        <button onclick="makeBid()" class="mx-auto block bg-emerald-400 rounded-full py-2 px-4 text-white mt-10 hover:-translate-y-1 transition-transform active:translate-y-1">Make bid</button>
-
-</div>
+    
 
 <!-- Biding pop up  -->
 <div id=make_bid_pop_up class="hidden bg-white text-emerald-400 rounded-lg absolute p-6 top-14 w-1/2 left-1/2 -translate-x-1/2">
@@ -128,62 +130,6 @@
 </div>
 
 <!-- js file  -->
-<script>let ad=document.getElementById('ad')
-  let adPopUp=document.getElementById('ad_pop_up')
-  let blackShade=document.getElementById('black_shade')
-  let makeBidPopUp=document.getElementById('make_bid_pop_up')
-  let confirmationPopUp=document.getElementById('confirmation_pop_up')
-  let congratulationsPopUp=document.getElementById('congratulations_pop_up')
-  
-  function closePopUp(){
-      if(!adPopUp.classList.contains('hidden'))
-          adPopUp.classList.add('hidden')
-      if(!blackShade.classList.contains('hidden'))
-          blackShade.classList.toggle('hidden')
-      if(!makeBidPopUp.classList.contains('hidden'))
-          makeBidPopUp.classList.add('hidden')
-  
-  
-  }
-  function makeBid(){
-  makeBidPopUp.classList.toggle('hidden')
-  adPopUp.classList.toggle('hidden')
-  
-  }
-  
-  function placeBid(){
-      confirmationPopUp.classList.toggle('hidden')
-      makeBidPopUp.classList.toggle('hidden')
-  
-  }
-  
-  function confirmBid(){
-  congratulationsPopUp.classList.toggle('hidden')
-  
-  }
-  function cancelBid(){
-  confirmationPopUp.classList.toggle('hidden')
-  blackShade.classList.toggle('hidden')
-  
-  
-  }
-  function doneBid(){
-      blackShade.classList.toggle('hidden')
-      confirmationPopUp.classList.toggle('hidden')
-      congratulationsPopUp.classList.toggle('hidden')
-      // adPopUp.classList.toggle('hidden')
-      // makeBidPopUp.classList.toggle('hidden')
-  
-  
-  
-  
-  
-  }
-  
-  ad.addEventListener('click',()=>{
-      blackShade.classList.toggle('hidden')
-      adPopUp.classList.toggle('hidden')
-  
-  })</script>
+<script src="/script.js"></script>
 </body>
 </html>
