@@ -1,121 +1,105 @@
-const bcrypt = require("bcrypt");
-const passport = require("passport");
-const validator = require("validator");
-const { pool } = require("../config/dbConfig");
-const jwt = require("jsonwebtoken");
+require("dotenv").config({path: '../config/.env'});
+const {pool} = require('../config/dbConfig')
+const { hash } = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
-module.exports = {
-  getLogin: (req, res) => {
-    res.render("login.ejs");
-  },
-  getRegister: (req, res) => {
-    res.render("register.ejs");
-  },
-  postRegister: async (req, res) => {
-    let { username, email, password, password2 } = req.body;
-    // console.log(pool);
-    // console.log({username, email, password, password2})
-    let errors = [];
 
-    if (!username || !email || !password || !password2) {
-      errors.push({ message: "Please enter all fields" });
-    }
 
-    if (password.length < 6) {
-      errors.push({ message: "Password must be at least 6 characters" });
-    }
+exports.getUsers = async (req, res) => {
+  try {
+    const { rows } = await pool.query('select id, username from users')
 
-    if (password != password2) {
-      errors.push({ message: "Passwords do not match" });
-    }
-
-    if (errors.length > 0) {
-      res.status(500).json({
-        errors,
-      });
-    } else {
-      let hashedPassword = await bcrypt.hash(password, 10);
-
-      pool.query(
-        `INSERT INTO users (username, email, password)
-            values ($1, $2, $3) returning id, password;`,
-        [username, email, hashedPassword],
-        (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.status(201).json({
-              message: {
-                msgBody: "Account successfully created",
-                msgError: false,
-              },
-            });
-          }
-        }
-      );
-    }
-  },
-  postLogin: (req, res, next) => {
-    const validationErrors = [];
-    // if(!validator.isEmail(req.body.email))validationErrors.push({msg:'Please enter a valid email address.'})
-    if (validator.isEmpty(req.body.password))
-      validationErrors.push({ msg: "Password cannot be blank." });
-
-    if (validationErrors.length) {
-      res.status(500).json({
-        message: {
-          msgBody: "Password cannot be blank",
-          msgError: true,
-        },
-      });
-    }
-
-    // req.body.email=validator.normalizeEmail(req.body.email,{gmail_remove_dots:false})
-
-    passport.authenticate("local", { session: false }),
-      (req, res) => {
-        if (req.isAuthenticated()) {
-          const { _id, email } = req.user;
-
-          const token = jwt.sign(
-            {
-              userId: _id,
-            },
-            process.env.SECRET,
-            { expiresIn: "24h" }
-          );
-
-          res.cookie(process.env.SECRET, token);
-          res
-            .status(200)
-            .json({ isAuthenticated: true, user: { email }, token: token });
-        }
-      };
-  },
-  signOut: async (req, res) => {
-    // delete session data from PostgreSQL
-
-    passport.authenticate("jwt", { session: false }),
-      (req, res) => {
-        res.clearCookie(process.env.SECRET);
-        res.json({ user: { email: "" }, success: true });
-      };
-  },
-  authenticate: async (req, res) => {
-    
-        passport.authenticate("jwt", { session: false }),
-        (req, res) => {
-          const { email } = req.user;
-          res.status(200).json({ isAuthenticated: true, user: { email } });
-        }
-      
-  },
-  checkAuthenticated : async (req, res) => {
-     
-    if (req.isAuthenticated()) {
-      return next();
-    }
-    // whatever our url will be for the frontend server
-    res.redirect("https://keeper-app-hammad.netlify.app/login");
+    return res.status(200).json({
+      success: true,
+      users: rows,
+    })
+  } catch (error) {
+    console.log(error.message)
   }
-};
+}
+
+exports.register = async (req, res) => {
+  const { username, password } = req.body
+  try {
+    const hashedPassword = await hash(password, 10)
+
+    await pool.query('insert into users(username,password) values ($1 , $2)', [
+      username,
+      hashedPassword,
+    ])
+
+    return res.status(201).json({
+      success: true,
+      message: 'The registraion was successful',
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    })
+  }
+}
+
+exports.login = async (req, res) => {
+  let user = req.user
+
+  let payload = {
+    id: user.id,
+    username: user.username,
+  }
+
+  try {
+    const token = payload;
+
+    return res.status(200).cookie('token', token, { httpOnly: true }).json({
+      success: true,
+      message: 'Logged in succefully',
+      token : payload
+    })
+  } catch (error) {
+
+    return res.status(500).json({
+      error: error.message,
+    })
+  }
+}
+
+const cookieExtractor = function (req) {
+  let token = null
+
+  if (req && req.cookies) 
+    token = req.cookies.token
+
+    console.log(token)
+}
+
+
+exports.protected = async (req, res) => {
+  try {
+    const { id, username } = cookieExtractor(req)
+
+    console.log("Cookie extractor")
+ 
+    return res.status(200).json({
+      username: username,
+      id: id,
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: "Cookie not extracted properly",
+    })
+    console.log(error.message)
+  }
+}
+
+exports.logout = async (req, res) => {
+  try {
+    return res.status(200).clearCookie('token', { httpOnly: true }).json({
+      success: true,
+      message: 'Logged out succefully',
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    })
+  }
+}

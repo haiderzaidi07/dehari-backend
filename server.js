@@ -1,53 +1,31 @@
-require('dotenv').config({path: './config/.env'})
 const express = require('express')
 const app = express()
-require('./config/passportConfig')
-const passport = require('passport')
+// require('./config/passportConfig')
+require('dotenv').config({path: './config/.env'})
+// const {PORT} = require('./constants/index')
 const cookieParser = require("cookie-parser");
-// const homeRoutes = require('./routes/home')
-const userRoutes = require('./routes/users')
-// const adRoutes = require('./routes/ad')
-// const profileRoutes = require('./routes/profile')
-const { pool } = require('./config/dbConfig')
-// const session = require('express-session')
-const pgSession = require('connect-pg-simple')(session)
-const flash = require('express-flash')
+const passport = require('passport')
+require('./middleware/passport-middleware')
+
+
 const cors = require('cors');
-const bodyParser = require('body-parser')
 
 
+app.use(express.json())
+app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }));
 
-// app.set('view engine', 'ejs')
+
+app.set('view engine', 'ejs')
 app.use(cors({
   origin: "http://localhost:3000",
   credentials: true
 }))
 
-app.use(cookieParser())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended:true}))
-
-
-app.use(session({
-  store: new pgSession({
-    pool,
-    tableName: 'session',
-
-  }),
-  secret: process.env.SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false } // Optional: set the "secure" flag for HTTPS-only cookies
-}));
-
-// app.use(flash())
 app.use(passport.initialize())
-app.use(passport.session())
+const userRoutes = require('./routes/users')
 
-app.use('/', homeRoutes)
 app.use('/users', userRoutes)
-app.use('/ad', adRoutes)
-app.use('/profile', profileRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server running on ${process.env.PORT}`)

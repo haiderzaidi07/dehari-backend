@@ -10,4 +10,4 @@ const pool = new Pool({
     connectionString : connectionString
 });
 
-module.exports = { pool };
+module.exports =  {pool}
