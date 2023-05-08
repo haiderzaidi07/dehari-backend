@@ -1,6 +1,30 @@
+require("dotenv").config({path: '../config/.env'});
+
 module.exports = {
-    getProfile: (req,res)=>{
-        console.log(req.user)
-        res.render('profile.ejs', { user: req.user })
+    
+    postProfile: (req,res)=>{
+        try {
+            return res.status(200).json({
+              success: true,
+              message: 'Profile added succefully',
+            })
+          } catch (error) {
+            return res.status(500).json({
+              error: error.message,
+            })
+          }
+    },
+
+    editProfile: (req,res)=>{
+        try {
+            return res.status(200).json({
+              success: true,
+              message: 'Profile Edited succefully',
+            })
+          } catch (error) {
+            return res.status(500).json({
+              error: error.message,
+            })
+          }
     }
 }
