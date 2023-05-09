@@ -24,9 +24,9 @@ app.use(cors({
 
 app.use(passport.initialize())
 const userRoutes = require('./routes/users')
-
+const adRoutes = require('./routes/ad')
 app.use('/users', userRoutes)
-
+app.use('/ad', adRoutes)
 app.listen(process.env.PORT, () => {
     console.log(`Server running on ${process.env.PORT}`)
 })

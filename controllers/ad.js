@@ -1,37 +1,43 @@
-const { pool } = require('../config/dbConfig')
+require("dotenv").config({path: '../config/.env'});
+const {pool} = require('../config/dbConfig')
 
-module.exports = {
-    getPostAd: (req, res) => {
-        res.render('postAd.ejs')
-    },
-    getAdList:(req, res)=>{
-        // console.log(req.user.id)
-        pool.query(`SELECT * FROM ads`, 
-        (err, result) => {
-            if (err) { console.error(err) }
 
-            else{
-                // console.log(result.rows)
-            }
 
-            res.render('adList.ejs', {ads: result.rows })
+    // exports.getAdList= (req, res)=>{
+    //     // console.log(req.user.id)
+    //     pool.query(`SELECT * FROM ads`, 
+    //     (err, result) => {
+    //         if (err) { console.error(err) }
+
+    //         else{
+    //             // console.log(result.rows)
+    //         }
+
+    //         res.render('adList.ejs', {ads: result.rows })
+    //     })
+    // },
+    exports.postAd = (req, res) =>{
+       
+       try{
+        const {title, description, price, userid} = req.body
+        try{
+            pool.query(`INSERT INTO ads (title, description, price, userid)
+            values ($1, $2, $3, $4)`, [title, description, price, userid])
+        } catch (error) {
+          console.log(error);
+        }
+        return res.status(200).json({
+            success: true,
+            message: 'Ad posted successfully'
         })
+    } catch (error){
+        res.status(500).json({
+            error: error.message,
+          })
+    }
+        
     },
-    postAd: (req, res) =>{
-        let {title, description, price} = req.body
-       pool.query(`INSERT INTO ads (title, description, price, userid)
-       values ($1, $2, $3, $4)`, [title, description, price, req.user.id], 
-       (err, result) =>{
-        if (err){
-            console.error(err)
-        }
-        else{
-            // req.session.userId = result.rows[0].id;
-            res.redirect('/homepage')
-        }
-       }) 
-    },
-    postBid: (req, res) =>{
+    exports.postBid= (req, res) =>{
         let {description, bid} = req.body;
         
         // console.log(req.body)
@@ -47,4 +53,3 @@ module.exports = {
             }
         })
     }
-}
