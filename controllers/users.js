@@ -108,3 +108,25 @@ exports.logout = async (req, res) => {
     })
   }
 }
+
+exports.profile = async (req, res) => {
+  const userid =req.params.userid
+  const user = await pool.query('SELECT * FROM profile WHERE userid = $1', [userid]);
+  const placedBids = await pool.query('SELECT * FROM bids WHERE userid = $1', [userid]);
+  const userAds = await pool.query('SELECT * FROM ads WHERE userid = $1', [userid]);
+  const offersIGot = await pool.query('SELECT * FROM bids WHERE ad_id IN (SELECT id FROM ads WHERE userid=$1)', [userid]);
+  const userProfile = user.rows[0]; 
+  try {
+    return res.status(200).json({
+      message: 'User profile found',
+      userProfile: userProfile,
+      placedBids: placedBids,
+      userAds: userAds,
+      offersIGot: offersIGot
+    })
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message
+    })
+  }
+}

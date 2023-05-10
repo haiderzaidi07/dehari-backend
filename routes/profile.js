@@ -16,7 +16,7 @@ const router = Router()
 
 
 router.post('/profile', insertProfile, validationMiddleware ,postProfile)
-router.put('/profile', editProfile, validationMiddleware, changeProfile)
+router.put('/editprofile', changeProfile, validationMiddleware, editProfile)
 
 
 module.exports = router
