@@ -3,19 +3,19 @@ const {pool} = require('../config/dbConfig')
 
 
 
-    // exports.getAdList= (req, res)=>{
-    //     // console.log(req.user.id)
-    //     pool.query(`SELECT * FROM ads`, 
-    //     (err, result) => {
-    //         if (err) { console.error(err) }
-
-    //         else{
-    //             // console.log(result.rows)
-    //         }
-
-    //         res.render('adList.ejs', {ads: result.rows })
-    //     })
-    // },
+exports.getAdList = (req, res) => {
+    pool.query(`SELECT * FROM ads`, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          error: 'Internal server error'
+        });
+      }
+      const ads = results.rows;
+      console.log(ads); // add this line to log the ads to console
+      return res.status(200).json(ads);
+    });
+  },
     exports.postAd = (req, res) =>{
        
        try{

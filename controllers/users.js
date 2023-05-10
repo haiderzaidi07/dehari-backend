@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 
 exports.getUsers = async (req, res) => {
   try {
-    const { rows } = await pool.query('select id, username from users')
+    const { rows } = await pool.query('select * from users')
 
     return res.status(200).json({
       success: true,
