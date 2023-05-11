@@ -112,9 +112,10 @@ exports.logout = async (req, res) => {
 exports.profile = async (req, res) => {
   const userid =req.params.userid
   const user = await pool.query('SELECT * FROM profile WHERE userid = $1', [userid]);
-  const placedBids = await pool.query('SELECT * FROM bids WHERE userid = $1', [userid]);
+  const placedBids = await pool.query('SELECT * FROM bids WHERE user_id = $1', [userid]);
   const userAds = await pool.query('SELECT * FROM ads WHERE userid = $1', [userid]);
-  const offersIGot = await pool.query('SELECT * FROM bids WHERE ad_id IN (SELECT id FROM ads WHERE userid=$1)', [userid]);
+  const offersIGot = await pool.query('select bids.description as bid_description, bids.bid as bid, bids.user_id as bids_userid, ads.title as adtitle, ads.description as ad_description, ads.userid as ad_userid, bids.id as bidid, bidsonads.bidid as bidid, bidsonads.adid as adid  from bidsonads join bids on bidsonads.bidid=bids.id join ads on bidsonads.adid=ads.id  WHERE ads.userid = $1 and bidsonads.status=false', [userid]);
+  const currentOrders = await pool.query('select bids.description as bid_description, bids.bid as bid, bids.user_id as bids_userid, ads.title as adtitle, ads.description as ad_description, ads.userid as ad_userid, bids.id as bidid, ads.id as adid  from bidsonads join bids on bidsonads.bidid=bids.id join ads on bidsonads.adid=ads.id  WHERE ads.userid = $1 and bidsonads.status=true', [userid]);
   const userProfile = user.rows[0]; 
   try {
     return res.status(200).json({
@@ -122,7 +123,8 @@ exports.profile = async (req, res) => {
       userProfile: userProfile,
       placedBids: placedBids,
       userAds: userAds,
-      offersIGot: offersIGot
+      offersIGot: offersIGot,
+      currentOrders: currentOrders
     })
   } catch (error) {
     return res.status(500).json({

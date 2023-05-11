@@ -6,14 +6,14 @@ const {
 } = require('../config/dbConfig')
 
 
-const makebid = async (req, res) => {
+exports.makebid = async (req, res) => {
     
     const {description, bid, ad_id, userid} = req.body;
 
  
     const ad = await pool.query('Select * from ads where id=$1', [ad_id])
     console.log(ad)
-     pool.query(`Insert into bids (description, bid, userid, ad_id) values ($1, $2, $3, $4)`, [description, bid, userid, ad_id], (error, results) => {
+     pool.query(`Insert into bids (description, bid, user_id, ad_id) values ($1, $2, $3, $4)`, [description, bid, userid, ad_id], (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).json({
@@ -21,9 +21,10 @@ const makebid = async (req, res) => {
             });
         }
        
-        return res.status(200).json({message: "added bid"});
     });
-     pool.query(`Insert into orders (ad_title, ad_description, bid_description, bid_bid, userid) values ($1, $2, $3, $4, $5)`, [ad.rows[0].title, ad.rows[0].description, description, bid, ad.rows[0].userid], (error, results) => {
+    const bid_id= await  pool.query('SELECT id FROM bids WHERE ad_id IN ($1) AND user_id IN ($2) AND description IN ($3) AND bid IN ($4)', [ad_id, userid, description, bid])
+    console.log(bid_id);
+     pool.query(`INSERT INTO bidsonads (bidid, adid, status) values ($1, $2, false)`, [bid_id.rows[0].id, ad_id], (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).json({
@@ -31,8 +32,29 @@ const makebid = async (req, res) => {
             });
         }
        
-        return res.status(200).json({message: "added bid"});
     });    
+    return res.status(200).json({message: "added bid"});
+
 }
 
-exports.makebid = makebid;
+exports.acceptBid = async (req, res) => {
+    const { bidid, adid } = req.body
+    try {
+        await pool.query(`UPDATE bidsonads set status=true where bidid=$1 and adid=$2`, [bidid, adid])
+        return res.status(200).json({ message: 'Bid updated successfully' });
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+}
+
+exports.rejectBid = async (req, res) => {
+    const { bidid, adid } = req.body
+    try {
+        await pool.query(`Delete from bidsonads where bidid=$1 and adid=$2`, [bidid, adid])
+        pool.query(`Delete from bids where id = $1`,[bidid])
+        return res.status(200).json({ message: 'Bid updated successfully' });
+      } catch (error) {
+        return res.status(500).json({ error: error.message });
+      }
+}
+
