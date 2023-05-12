@@ -31,7 +31,7 @@ exports.makebid = async (req, res) => {
                 error: 'Internal server error'
             });
         }
-       
+       console.log("bid on ad added")   
     });    
     return res.status(200).json({message: "added bid"});
 

@@ -33,7 +33,6 @@ app.use('/users', userRoutes)
 app.use('/ad', adRoutes)
 app.use('/bid', bidRoutes)
 
-
 app.listen(process.env.PORT, () => {
     console.log(`Server running on ${process.env.PORT}`)
 })

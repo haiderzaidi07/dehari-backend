@@ -6,12 +6,14 @@ const {
   } = require('../middleware/validations-middleware')
   const passport = require('passport')
   require('../middleware/passport-middleware')
-
+  const {
+    userAuth
+  } = require('../middleware/auth-middleware')
 
 const router = Router()
 
-router.post('/makebid',validationMiddleware , makebid)
-router.post('/acceptbid', acceptBid)
-router.post('/rejectbid', rejectBid)
+router.post('/makebid', userAuth, validationMiddleware , makebid)
+router.post('/acceptbid', userAuth, acceptBid)
+router.post('/rejectbid', userAuth, rejectBid)
 
 module.exports = router

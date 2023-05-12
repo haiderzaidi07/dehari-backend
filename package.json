@@ -38,6 +38,8 @@
     "passport-local": "^1.0.0",
     "pg": "^8.10.0",
     "railway": "^2.0.17",
+    "socket-io": "^1.0.0",
+    "socket.io": "^4.6.1",
     "universal-cookie": "^4.0.4",
     "util": "^0.12.5",
     "validator": "^13.9.0"

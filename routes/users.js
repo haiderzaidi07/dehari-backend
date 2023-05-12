@@ -12,7 +12,9 @@ const {
 } = require('../middleware/validations-middleware')
 const passport = require('passport')
 require('../middleware/passport-middleware')
-
+const {
+  userAuth
+} = require('../middleware/auth-middleware')
 
 
 const { registerValidation, loginValidation, registerUser } = require('../validators/auth')
@@ -24,6 +26,6 @@ router.get('/protected', protected)
 router.post('/register', registerValidation, registerUser, validationMiddleware, register)
 router.post('/login', loginValidation, validationMiddleware, login)
 router.get('/logout', logout)
-router.get('/profile/:userid', profile)
+router.get('/profile/:userid', userAuth, profile)
 
 module.exports = router
