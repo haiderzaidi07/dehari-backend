@@ -35,4 +35,5 @@ app.use('/bid', bidRoutes)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server running on ${process.env.PORT}`)
+    console.log(process.env)
 })
