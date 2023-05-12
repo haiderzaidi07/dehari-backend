@@ -90,7 +90,7 @@ module.exports = {
     },
     getOffersIgot: async (req, res) => {
       const userid = req.params.id;
-      const offersIGot = await pool.query('select bids.description as bid_description, bids.bid as bid, bids.user_id as bids_userid, ads.title as adtitle, ads.description as ad_description, ads.userid as ad_userid, bids.id as bidid, ads.id as adid  from bidsonads join bids on bidsonads.bidid=bids.id join ads on bidsonads.adid=ads.id  WHERE ads.userid = $1 and bidsonads.status=true', [userid]);
+      const offersIGot = await pool.query('select bids.description as bid_description, bids.bid as bid, bids.user_id as bids_userid, ads.title as adtitle, ads.description as ad_description, ads.userid as ad_userid, bids.id as bidid, ads.id as adid  from bidsonads join bids on bidsonads.bidid=bids.id join ads on bidsonads.adid=ads.id  WHERE ads.userid = $1 and bidsonads.status=false', [userid]);
       try {
         return res.status(200).json({
           message: 'Current Offers I Got',
