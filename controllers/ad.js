@@ -1,5 +1,5 @@
 require("dotenv").config({path: '../config/.env'});
-const {pool} = require('../config/dbConfig')
+const {pool} = require('../dbConfig')
 
 
 

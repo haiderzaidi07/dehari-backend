@@ -3,7 +3,7 @@ require("dotenv").config({
 });
 const {
     pool
-} = require('../config/dbConfig')
+} = require('../dbConfig')
 
 
 exports.makebid = async (req, res) => {

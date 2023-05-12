@@ -1,5 +1,5 @@
 
-const { pool } = require('../config/dbConfig')
+const { pool } = require('../dbConfig')
 const {hash, compare } = require('bcryptjs')
 
 

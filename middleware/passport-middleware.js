@@ -4,7 +4,7 @@ require("dotenv").config({path: '../config/.env'});
 const { Strategy } = require('passport-jwt')
 const ExtractJwt = require('passport-jwt').ExtractJwt
 
-const {pool} = require('../config/dbConfig')
+const {pool} = require('../dbConfig')
 
 const cookieExtractor = function (req) {
   let token = null
