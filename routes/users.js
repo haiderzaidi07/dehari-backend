@@ -5,7 +5,8 @@ const {
   login,
   protected,
   logout,
-  profile
+  profile,
+  forgotPassword,
 } = require('../controllers/users')
 const {
   validationMiddleware,
@@ -27,5 +28,6 @@ router.post('/register', registerValidation, registerUser, validationMiddleware,
 router.post('/login', loginValidation, validationMiddleware, login)
 router.get('/logout', logout)
 router.get('/profile/:userid', userAuth, profile)
+router.post('/forgot-password', forgotPassword)
 
 module.exports = router

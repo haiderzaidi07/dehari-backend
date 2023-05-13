@@ -6,6 +6,6 @@ const router = Router()
 
 router.post('/post', userAuth, postAd)
 router.get('/list', userAuth, getAdList)
-router.post('/delete', userAuth, deleteAd)
+router.delete('/delete/:id', userAuth, deleteAd)
 
 module.exports = router

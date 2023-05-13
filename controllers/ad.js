@@ -4,13 +4,14 @@ const {pool} = require('../dbConfig')
 
 
 exports.getAdList = (req, res) => {
-    pool.query(`SELECT * FROM ads`, (error, results) => {
+    pool.query(`select ads.id, ads.title, ads.description, ads.price, ads.userid, users.username as ad_username from ads join users on ads.userid = users.id;`, (error, results) => {
       if (error) {
         console.log(error);
         return res.status(500).json({
           error: 'Internal server error'
         });
       }
+      
       const ads = results.rows;
       console.log(ads); // add this line to log the ads to console
       return res.status(200).json(ads);
@@ -56,7 +57,7 @@ exports.getAdList = (req, res) => {
 
 
     exports.deleteAd = async (req, res) => {
-      let {adid} = req.body;
+      let adid = req.params.id;
       try{
         await pool.query(`DELETE FROM ads WHERE id = $1`, [adid])
         res.status(200).json({ message: 'Ad deleted successfully' });

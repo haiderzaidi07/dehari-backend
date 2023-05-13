@@ -8,12 +8,12 @@ const {
 
 exports.makebid = async (req, res) => {
     
-    const {description, bid, ad_id, userid} = req.body;
+    const {title, description, bid, ad_id, userid} = req.body;
 
- 
+    console.log (ad_id) 
     const ad = await pool.query('Select * from ads where id=$1', [ad_id])
     console.log(ad)
-     pool.query(`Insert into bids (description, bid, user_id, ad_id) values ($1, $2, $3, $4)`, [description, bid, userid, ad_id], (error, results) => {
+     pool.query(`Insert into bids (description, bid, user_id, ad_id, title) values ($1, $2, $3, $4, $5)`, [description, bid, userid, ad_id, title], (error, results) => {
         if (error) {
             console.log(error);
             return res.status(500).json({
@@ -59,9 +59,9 @@ exports.rejectBid = async (req, res) => {
 }
 
 exports.deleteBid = async (req, res) => {
-    const {bidid} = req.body
+    const bidid = req.params.id
     try {
-        await pool.query(`Delete from bids where id  $1`, [bidid])
+        await pool.query(`Delete from bids where id = $1`, [bidid])
         return res.status(200).json({ message: 'Bid deleted successfully' });
     } catch (error) {
         return res.status(500).json({ error: error.message });

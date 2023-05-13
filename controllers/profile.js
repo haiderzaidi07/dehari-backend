@@ -9,6 +9,7 @@ module.exports = {
               message: 'Profile added succefully',
             })
           } catch (error) {
+            console.log("error occured when posting")
             return res.status(500).json({
               error: error.message,
             })
@@ -61,7 +62,8 @@ module.exports = {
     },
     getPlacedBids: async (req,res)=>{
       const userid = req.params.id;
-      const placedBids = await pool.query('SELECT * FROM bids WHERE user_id = $1', [userid]);
+      const placedBids = await pool.query('SELECT * FROM bidsonads JOIN bids ON bidsonads.bidid = bids.id WHERE bids.user_id = $1', [userid]);
+
       try {
         return res.status(200).json({
           message: 'Current Placed Bids',

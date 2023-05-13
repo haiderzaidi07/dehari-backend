@@ -15,6 +15,6 @@ const router = Router()
 router.post('/makebid', userAuth, validationMiddleware , makebid)
 router.post('/acceptbid', userAuth, acceptBid)
 router.post('/rejectbid', userAuth, rejectBid)
-router.post('/deletebid', userAuth, deleteBid)
+router.delete('/deletebid/:id', userAuth, deleteBid)
 
 module.exports = router

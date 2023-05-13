@@ -34,15 +34,17 @@ const usernameExists = async (req, res, next) => {
 
 // Middleware function
 const registerUser = async (req, res, next) => {
-  const { username, email, password } = req.body
+  const { username, email, password, securityQuestion, securityAnswer } = req.body
 
   try {
     const hashedPassword = await hash(password, 10)
 
-    const user = await pool.query('insert into users(username,email, password) values ($1 , $2, $3) returning *', [
+    const user = await pool.query('insert into users(username,email, password, securityQuestion, securityAnswer) values ($1 , $2, $3, $4, $5) returning *', [
       username,
       email,
       hashedPassword,
+      securityQuestion,
+      securityAnswer
     ])
    
 
@@ -61,7 +63,7 @@ const registerUser = async (req, res, next) => {
 
 async function loginFieldsCheck(req, res, next) {
     const { username, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     try {
       const user = await pool.query('SELECT * from users WHERE username = $1', [username]);
 
