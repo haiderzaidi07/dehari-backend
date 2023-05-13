@@ -55,11 +55,12 @@ exports.login = async (req, res) => {
   try {
     const token = payload;
 
-    return res.status(200).cookie('token', token, { httpOnly: true }).json({
+    return res.status(200).cookie('token', token, {httpOnly: true}).json({
       success: true,
       message: 'Logged in succefully',
       token : payload
     })
+
   } catch (error) {
 
     return res.status(500).json({

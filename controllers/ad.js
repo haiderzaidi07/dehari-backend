@@ -53,3 +53,16 @@ exports.getAdList = (req, res) => {
             }
         })
     }
+
+
+    exports.deleteAd = async (req, res) => {
+      let {adid} = req.body;
+      try{
+        await pool.query(`DELETE FROM ads WHERE id = $1`, [adid])
+        res.status(200).json({ message: 'Ad deleted successfully' });
+      } catch(error)
+      {
+        res.status(500).json({ error: error.message });
+      }
+
+    }

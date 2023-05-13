@@ -58,3 +58,13 @@ exports.rejectBid = async (req, res) => {
       }
 }
 
+exports.deleteBid = async (req, res) => {
+    const {bidid} = req.body
+    try {
+        await pool.query(`Delete from bids where id  $1`, [bidid])
+        return res.status(200).json({ message: 'Bid deleted successfully' });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
+
