@@ -3,8 +3,10 @@ const { pool } = require("../dbConfig");
 
 // Middleware function
 const insertProfile = async (req, res, next) => {
-  const { fullname, skills, certification } = req.body;
-  const { id } = req.cookies.token;
+  const { fullname, skills, certification, id } = req.body;
+
+
+  console.log("profile setup", fullname, skills, certification, id);
   try {
 
 

@@ -33,6 +33,7 @@ exports.register = async (req, res) => {
     id: user.id,
     username: user.username,
   }
+  console.log('register', req.user)
 
   try {
     const token = payload;
@@ -62,12 +63,14 @@ exports.forgotPassword = async (req, res) => {
   try {
 
     const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-
+   
     if (!user.rows[0]) {
       throw new Error('User not found')
     }
     
     const userAnswer = user.rows[0].securityanswer
+    console.log("user answer", userAnswer)
+    console.log("answer", answer)
     if (userAnswer === answer) {
       const hashedPassword = await hash(newPassword, 10)
       await pool.query('UPDATE users SET password = $1 WHERE email = $2', [hashedPassword, email]);
@@ -76,8 +79,11 @@ exports.forgotPassword = async (req, res) => {
         success: true,
         message: 'User verified successfully and password has been changed',
       })
+    } else {
+      throw new Error ('User not answer does not match')
     }
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
       error: error.message,
     })

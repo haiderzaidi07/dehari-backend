@@ -62,8 +62,8 @@ module.exports = {
     },
     getPlacedBids: async (req,res)=>{
       const userid = req.params.id;
-      const placedBids = await pool.query('SELECT * FROM bidsonads JOIN bids ON bidsonads.bidid = bids.id WHERE bids.user_id = $1', [userid]);
-
+      const placedBids = await pool.query('SELECT ads.title as ad_title, ads.description as ad_description, ads.price as price, bids.title as bid_title, bids.description as bid_description, bids.bid as bid, bidsonads.status as status FROM bidsonads JOIN bids ON bidsonads.bidid = bids.id JOIN ads ON bidsonads.adid = ads.id WHERE bids.user_id = $1', [userid]);
+      // console.log(placedBids)
       try {
         return res.status(200).json({
           message: 'Current Placed Bids',
