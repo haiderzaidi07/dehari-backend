@@ -11,8 +11,9 @@ const {
   } = require('../middleware/auth-middleware')
 
 const router = Router()
+const upload = require('../middleware/multer')
 
-router.post('/makebid', userAuth, validationMiddleware , makebid)
+router.post('/makebid', userAuth, validationMiddleware, upload.single("file"), makebid)
 router.post('/acceptbid', userAuth, acceptBid)
 router.post('/rejectbid', userAuth, rejectBid)
 router.delete('/deletebid/:id', userAuth, deleteBid)

@@ -7,6 +7,9 @@ const {
 
 
 exports.makebid = async (req, res) => {
+
+    // console.log(req)
+    // console.log(req.file)
     
     const {title, description, bid, ad_id, userid} = req.body;
 
